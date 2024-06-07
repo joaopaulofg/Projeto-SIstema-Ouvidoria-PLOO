@@ -1,5 +1,7 @@
 package ouvidoria;
 
+import exception.ConexaoFalhouException;
+
 import java.util.*;
 
 public class SistemaOuvidoria {
@@ -16,7 +18,7 @@ public class SistemaOuvidoria {
         this.tiposManifestacao.put(3, "Elogio");
     }
 
-    public void listarManifestacoes() {
+    public void listarManifestacoes() throws ConexaoFalhouException {
         List<Manifestacao> manifestacoesCadastradas = manifestacaoDAO.listarTodasAsManifestacoes();
 
         for(Manifestacao manifestacao : manifestacoesCadastradas){
@@ -79,7 +81,7 @@ public class SistemaOuvidoria {
         System.out.println("\nManifestação não encontrada...");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ConexaoFalhouException {
         SistemaOuvidoria ouvidoria = new SistemaOuvidoria();
         Scanner sc = new Scanner(System.in);
 

@@ -1,5 +1,7 @@
 package ouvidoria;
 
+import exception.ConexaoFalhouException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class ManifestacaoDAO {
         }
     }
 
-    public List<Manifestacao> listarTodasAsManifestacoes() {
+    public List<Manifestacao> listarTodasAsManifestacoes() throws ConexaoFalhouException {
         List<Manifestacao> manifestacoes = new ArrayList<>();
         String SQL = "SELECT * FROM manifestacao";
         try(Connection conn = DatabaseConnection.getConnection();
@@ -34,20 +36,11 @@ public class ManifestacaoDAO {
                 String nomeManifestante = resultSet.getString("nomeManifestante");
                 String manifestacao = resultSet.getString("manifestacao");
                 manifestacoes.add(new Manifestacao(idManifestacao, tipoManifestacao, nomeManifestante, manifestacao));
-
-//                int idManifestacao = resultSet.getInt("idManifestacao");
-//                String tipoManifestacao = resultSet.getString("tipoManifestacao");
-//                String nomeManifestante = resultSet.getString("nomeManifestante");
-//                String manifestacao = resultSet.getString("manifestacao");
-//
-//                System.out.println("Manifestação ID #" + idManifestacao +
-//                        "Tipo Manifestação: " + tipoManifestacao +
-//                        "Manifestante: " + nomeManifestante +
-//                        "Relato: " + manifestacao);
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new ConexaoFalhouException(e);
+            //System.out.println(e.getMessage());
         }
         return manifestacoes;
     }
@@ -57,7 +50,7 @@ public class ManifestacaoDAO {
         String SQL = "SELECT * FROM manifestacao WHERE tipoManifestacao = ?";
 
         try(Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement preparedStatement = conn.prepareStatement(SQL);) {
+        PreparedStatement preparedStatement = conn.prepareStatement(SQL)) {
 
             preparedStatement.setString(1, tipoStr);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -70,7 +63,7 @@ public class ManifestacaoDAO {
                 manifestacoesEncontradas.add(new Manifestacao(idManifestacao, tipoManifestacao, nomeManifestante, manifestacao));
             }
 
-        } catch (Exception e ) {
+        } catch (SQLException e ) {
             System.out.println(e.getMessage());
         }
         return manifestacoesEncontradas;
