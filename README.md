@@ -1,6 +1,6 @@
 # Sistema de Ouvidoria
 
-Este é um sistema de ouvidoria desenvolvido em Java que permite aos usuários registrar manifestações, como reclamações, sugestões ou elogios, e aos administradores visualizar, pesquisar e excluir essas manifestações. O sistema utiliza Java SQL e JDBC para se conectar a um banco de dados MySQL, onde as manifestações são armazenadas.
+Este é um sistema de ouvidoria desenvolvido em Java como projeto final da disciplina Programar em Linguagem Orientada a Objetos Básica, do curso de Análise e Desenvolvimento de Sistemas, da Unifacisa. O sistema permite aos usuários registrar manifestações, como reclamações, sugestões ou elogios, e aos administradores visualizar, pesquisar e excluir essas manifestações. O sistema utiliza Java SQL e JDBC para se conectar a um banco de dados MySQL, onde as manifestações são armazenadas.
 
 ## Funcionalidades
 

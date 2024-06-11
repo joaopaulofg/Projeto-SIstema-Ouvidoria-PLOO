@@ -3,9 +3,9 @@ package ouvidoria;
 public class Manifestacao {
 
     private int idManifestacao;
-    private String tipoManifestacao;
-    private String nomeManifestante;
-    private String textoManifestacao;
+    private final String tipoManifestacao;
+    private final String nomeManifestante;
+    private final String textoManifestacao;
 
     Manifestacao(String tipoManifestacao, String nomeManifestante, String textoManifestacao) {
         this.tipoManifestacao = tipoManifestacao;
@@ -34,10 +34,6 @@ public class Manifestacao {
 
     public String getTextoManifestacao() {
         return textoManifestacao;
-    }
-
-    public void setTextoManifestacao(String textoManifestacao) {
-        this.textoManifestacao = textoManifestacao;
     }
 
 }

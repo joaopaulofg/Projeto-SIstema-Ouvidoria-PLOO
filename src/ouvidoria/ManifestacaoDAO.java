@@ -1,7 +1,9 @@
 package ouvidoria;
 
 import exception.ConexaoFalhouException;
+import exception.ManifestacaoNaoEncontradaException;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +41,7 @@ public class ManifestacaoDAO {
             }
 
         } catch (SQLException e) {
-            throw new ConexaoFalhouException(e);
-            //System.out.println(e.getMessage());
+            throw new ConexaoFalhouException("Erro na conexão com o banco de dados ao listar todas as manifestações: ", e);
         }
         return manifestacoes;
     }
@@ -67,5 +68,24 @@ public class ManifestacaoDAO {
             System.out.println(e.getMessage());
         }
         return manifestacoesEncontradas;
+    }
+
+    public void excluirManifestacao(int idProcurado) throws ConexaoFalhouException {
+        String SQL = "DELETE FROM manifestacao WHERE idManifestacao = ?";
+        try(Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement preparedStatement = conn.prepareStatement(SQL)) {
+
+            preparedStatement.setInt(1, idProcurado);
+            int linhasAfetadas = preparedStatement.executeUpdate();
+            if(linhasAfetadas == 0) {
+                throw new ManifestacaoNaoEncontradaException("\nManifestação com o ID "
+                        + idProcurado + " não encontrada.");
+            }
+
+        } catch (SQLException e) {
+            throw new ConexaoFalhouException("Erro na conexão com o banco de dados ao listar todas as manifestações: ", e);
+        } catch (ManifestacaoNaoEncontradaException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

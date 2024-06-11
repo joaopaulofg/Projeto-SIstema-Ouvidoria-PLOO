@@ -1,7 +1,9 @@
 package ouvidoria;
 
 import exception.ConexaoFalhouException;
+import exception.ManifestacaoNaoEncontradaException;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class SistemaOuvidoria {
@@ -70,18 +72,11 @@ public class SistemaOuvidoria {
         System.out.println("\nNenhuma manifestação cadastrada com o ID informado.");
     }
 
-    public void excluirManifestacaoPorId(int idExclusao) {
-        for(Manifestacao manifestacao : manifestacoes) {
-            if(manifestacao.getIdManifestacao() == idExclusao) {
-                manifestacoes.remove(manifestacao);
-                System.out.println("\nManifestação excluída com sucesso!");
-                return;
-            }
-        }
-        System.out.println("\nManifestação não encontrada...");
+    public void excluirManifestacaoPorId(int idExclusao) throws ConexaoFalhouException {
+        manifestacaoDAO.excluirManifestacao(idExclusao);
     }
 
-    public static void main(String[] args) throws ConexaoFalhouException {
+    public static void main(String[] args) throws ConexaoFalhouException, ManifestacaoNaoEncontradaException {
         SistemaOuvidoria ouvidoria = new SistemaOuvidoria();
         Scanner sc = new Scanner(System.in);
 
