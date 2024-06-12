@@ -135,13 +135,11 @@ public class SistemaOuvidoria {
                     System.out.println("\nInforme a descrição da sua manifestação: ");
                     String descricao = sc.nextLine();
                     ouvidoria.criarManifestacao(tipoManifestacao, manifestante, descricao);
-
                     System.out.println("\nPressione qualquer tecla para continuar...");
                     sc.nextLine();
                     break;
                 case 4:
                     ouvidoria.exibirQuantidadeDeManifestacoes();
-
                     System.out.println("\nPressione qualquer tecla para continuar...");
                     sc.nextLine();
                     break;
@@ -159,7 +157,6 @@ public class SistemaOuvidoria {
                     int idExclusao = sc.nextInt();
                     sc.nextLine();
                     ouvidoria.excluirManifestacaoPorId(idExclusao);
-
                     System.out.println("\nPressione qualquer tecla para continuar...");
                     sc.nextLine();
                     break;
