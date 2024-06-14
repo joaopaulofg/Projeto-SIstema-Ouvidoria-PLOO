@@ -23,11 +23,15 @@ public class SistemaOuvidoria {
     public void listarManifestacoes() throws ConexaoFalhouException {
         List<Manifestacao> manifestacoesCadastradas = manifestacaoDAO.listarTodasAsManifestacoes();
 
-        for(Manifestacao manifestacao : manifestacoesCadastradas){
-            System.out.println("\nManifestação ID #" + manifestacao.getIdManifestacao() +
-            "\nTipo Manifestação: " + manifestacao.getTipoManifestacao() +
-            "\nManifestante: " + manifestacao.getNomeManifestante() +
-            "\nRelato: " + manifestacao.getTextoManifestacao());
+        if(!manifestacoesCadastradas.isEmpty()) {
+            for(Manifestacao manifestacao : manifestacoesCadastradas){
+                System.out.println("\nManifestação ID #" + manifestacao.getIdManifestacao() +
+                        "\nTipo Manifestação: " + manifestacao.getTipoManifestacao() +
+                        "\nManifestante: " + manifestacao.getNomeManifestante() +
+                        "\nRelato: " + manifestacao.getTextoManifestacao());
+            }
+        } else {
+            System.out.println("\nNenhuma manifestação cadastrada...");
         }
     }
 
@@ -72,8 +76,12 @@ public class SistemaOuvidoria {
         System.out.println("\nNenhuma manifestação cadastrada com o ID informado.");
     }
 
-    public void excluirManifestacaoPorId(int idExclusao) throws ConexaoFalhouException {
-        manifestacaoDAO.excluirManifestacao(idExclusao);
+    public void excluirManifestacaoPorId(int idExclusao) throws ConexaoFalhouException, ManifestacaoNaoEncontradaException {
+        int linhasAfetadas = manifestacaoDAO.excluirManifestacao(idExclusao);
+        if(linhasAfetadas == 0) {
+            throw new ManifestacaoNaoEncontradaException("\nManifestação com o ID "
+                    + idExclusao + " não encontrada.");
+        }
     }
 
     public static void main(String[] args) throws ConexaoFalhouException, ManifestacaoNaoEncontradaException {
@@ -148,15 +156,18 @@ public class SistemaOuvidoria {
                     int idManifestacaoProcurada = sc.nextInt();
                     sc.nextLine();
                     ouvidoria.buscarManifestacaoPorId(idManifestacaoProcurada);
-
                     System.out.println("\nPressione qualquer tecla para continuar...");
                     sc.nextLine();
                     break;
                 case 6:
-                    System.out.println("\nInsira o ID da manifestação que deseja excluir: ");
-                    int idExclusao = sc.nextInt();
-                    sc.nextLine();
-                    ouvidoria.excluirManifestacaoPorId(idExclusao);
+                    try {
+                        System.out.println("\nInsira o ID da manifestação que deseja excluir: ");
+                        int idExclusao = sc.nextInt();
+                        sc.nextLine();
+                        ouvidoria.excluirManifestacaoPorId(idExclusao);
+                    } catch (ManifestacaoNaoEncontradaException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("\nPressione qualquer tecla para continuar...");
                     sc.nextLine();
                     break;
