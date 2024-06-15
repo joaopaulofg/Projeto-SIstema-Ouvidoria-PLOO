@@ -7,12 +7,10 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class SistemaOuvidoria {
-    private final List<Manifestacao> manifestacoes;
     private final ManifestacaoDAO manifestacaoDAO;
     private final Map<Integer, String> tiposManifestacao;
 
     public SistemaOuvidoria() {
-        this.manifestacoes = new ArrayList<>();
         this.manifestacaoDAO = new ManifestacaoDAO();
         this.tiposManifestacao = new HashMap<>();
         this.tiposManifestacao.put(1, "Reclamação");
@@ -59,21 +57,11 @@ public class SistemaOuvidoria {
     }
 
     public void exibirQuantidadeDeManifestacoes() {
-        if(manifestacoes.isEmpty()) {
-            System.out.println("\nNão há manifestações cadastradas.");
-        } else {
-            System.out.println("\nQuantidade de manifestações cadastradas: " + manifestacoes.size());
-        }
+        // TODO
     }
 
     public void buscarManifestacaoPorId(int idProcurado) {
-        for(Manifestacao manifestacao : manifestacoes) {
-            if(manifestacao.getIdManifestacao() == idProcurado) {
-                System.out.println(manifestacao.toString());
-                break;
-            }
-        }
-        System.out.println("\nNenhuma manifestação cadastrada com o ID informado.");
+        // TODO
     }
 
     public void excluirManifestacaoPorId(int idExclusao) throws ConexaoFalhouException, ManifestacaoNaoEncontradaException {
