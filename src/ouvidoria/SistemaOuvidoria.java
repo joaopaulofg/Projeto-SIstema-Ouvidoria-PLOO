@@ -56,8 +56,13 @@ public class SistemaOuvidoria {
         System.out.println("\nManifestação cadastrada com sucesso!");
     }
 
-    public void exibirQuantidadeDeManifestacoes() {
-        // TODO
+    public void exibirQuantidadeDeManifestacoes() throws ConexaoFalhouException {
+        int quantidadeManifestacoes = manifestacaoDAO.exibirQuantidadeDeManifestacoes();
+        if(quantidadeManifestacoes == 0) {
+            System.out.println("\nNão existe nenhuma manifestação cadastrada no sistema.");
+        } else {
+            System.out.println("\nExistem " + quantidadeManifestacoes + " cadastradas no sistema.");
+        }
     }
 
     public void buscarManifestacaoPorId(int idProcurado) {
@@ -69,6 +74,8 @@ public class SistemaOuvidoria {
         if(linhasAfetadas == 0) {
             throw new ManifestacaoNaoEncontradaException("\nManifestação com o ID "
                     + idExclusao + " não encontrada.");
+        } else {
+            System.out.println("\nManifestação " + idExclusao + " excluída com sucesso!");
         }
     }
 

@@ -80,4 +80,21 @@ public class ManifestacaoDAO {
         }
         return linhasAfetadas;
     }
+
+    public int exibirQuantidadeDeManifestacoes() throws ConexaoFalhouException {
+        String SQL = "SELECT COUNT(*) FROM manifestacao";
+        int quantidadeDeManifestacoes = 0;
+        try(Connection conn = DatabaseConnection.getConnection();
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery(SQL)) {
+            //quantidadeDeManifestacoes = resultSet.getInt("COUNT(*)");
+            if(resultSet.next()) {
+                quantidadeDeManifestacoes = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new ConexaoFalhouException("Erro na conexão com o banco de dados ao consultar a quantidade de manifestações cadastradas: ", e);
+        }
+
+        return quantidadeDeManifestacoes;
+    }
 }
