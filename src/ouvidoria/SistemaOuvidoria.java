@@ -3,7 +3,6 @@ package ouvidoria;
 import exception.ConexaoFalhouException;
 import exception.ManifestacaoNaoEncontradaException;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class SistemaOuvidoria {
@@ -61,7 +60,7 @@ public class SistemaOuvidoria {
         if(quantidadeManifestacoes == 0) {
             System.out.println("\nNão existe nenhuma manifestação cadastrada no sistema.");
         } else {
-            System.out.println("\nExistem " + quantidadeManifestacoes + " cadastradas no sistema.");
+            System.out.println("\nExistem " + quantidadeManifestacoes + " manifestações cadastradas no sistema.");
         }
     }
 
@@ -79,7 +78,7 @@ public class SistemaOuvidoria {
         }
     }
 
-    public static void main(String[] args) throws ConexaoFalhouException, ManifestacaoNaoEncontradaException {
+    public static void main(String[] args) throws ConexaoFalhouException {
         SistemaOuvidoria ouvidoria = new SistemaOuvidoria();
         Scanner sc = new Scanner(System.in);
 
@@ -119,7 +118,6 @@ public class SistemaOuvidoria {
                     int tipoListagem = sc.nextInt();
                     sc.nextLine();
                     ouvidoria.listarManifestacoesPorTipo(tipoListagem);
-
                     System.out.println("\nPressione qualquer tecla para continuar...");
                     sc.nextLine();
                     break;
@@ -160,7 +158,7 @@ public class SistemaOuvidoria {
                         int idExclusao = sc.nextInt();
                         sc.nextLine();
                         ouvidoria.excluirManifestacaoPorId(idExclusao);
-                    } catch (ManifestacaoNaoEncontradaException e) {
+                    } catch (ManifestacaoNaoEncontradaException | ConexaoFalhouException e) {
                         System.out.println(e.getMessage());
                     }
                     System.out.println("\nPressione qualquer tecla para continuar...");
@@ -173,9 +171,6 @@ public class SistemaOuvidoria {
                 default:
                     System.out.println("\nOpção inválida. Tente novamente.");
             }
-
         }
-
     }
-
 }
