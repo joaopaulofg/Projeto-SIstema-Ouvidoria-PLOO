@@ -51,8 +51,12 @@ public class SistemaOuvidoria {
             return;
         }
         Manifestacao manifestacao = new Manifestacao(tipoStr, nomeManifestante, descricao);
-        manifestacaoDAO.criarManifestacao(manifestacao);
-        System.out.println("\nManifestação cadastrada com sucesso!");
+        int linhasAfetadas = manifestacaoDAO.criarManifestacao(manifestacao);
+        if(linhasAfetadas > 0) {
+            System.out.println("\nManifestação cadastrada com sucesso!");
+        } else {
+            System.out.println("\nNão foi possível cadastrar a manifestação...");
+        }
     }
 
     public void exibirQuantidadeDeManifestacoes() throws ConexaoFalhouException {

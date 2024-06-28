@@ -8,19 +8,21 @@ import java.util.List;
 
 public class ManifestacaoDAO {
 
-    public void criarManifestacao(Manifestacao manifestacao) {
+    public int criarManifestacao(Manifestacao manifestacao) {
         String SQL = "INSERT INTO manifestacao (tipoManifestacao, nomeManifestante, manifestacao) VALUES (?, ?, ?)";
+        int linhasAfetadas = 0;
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
 
             pstmt.setString(1, manifestacao.getTipoManifestacao());
             pstmt.setString(2, manifestacao.getNomeManifestante());
             pstmt.setString(3, manifestacao.getTextoManifestacao());
-            pstmt.executeUpdate();
+            linhasAfetadas = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return linhasAfetadas;
     }
 
     public List<Manifestacao> listarTodasAsManifestacoes() throws ConexaoFalhouException {
