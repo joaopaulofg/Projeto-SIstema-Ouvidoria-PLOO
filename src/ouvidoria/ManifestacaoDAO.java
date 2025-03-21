@@ -70,6 +70,29 @@ public class ManifestacaoDAO {
         return manifestacoesEncontradas;
     }
 
+    public Manifestacao buscarManifestacaoPorId(int id) throws ConexaoFalhouException {
+        Manifestacao manifestacao = null;
+        String SQL = "SELECT * FROM manifestacao WHERE idManifestacao = ?";
+
+        try(Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement preparedStatement = conn.prepareStatement(SQL)) {
+
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                String tipoManifestacao = resultSet.getString("tipoManifestacao");
+                String nomeManifestante = resultSet.getString("nomeManifestante");
+                String textoManifestacao = resultSet.getString("manifestacao");
+                manifestacao = new Manifestacao(id, tipoManifestacao, nomeManifestante, textoManifestacao);
+            }
+
+        } catch (SQLException e) {
+            throw new ConexaoFalhouException("Erro na conexão com o banco de dados ao buscar manifestação por ID: ", e);
+        }
+
+        return manifestacao;
+    }
+
     public int excluirManifestacao(int idProcurado) throws ConexaoFalhouException {
         String SQL = "DELETE FROM manifestacao WHERE idManifestacao = ?";
         int linhasAfetadas;
@@ -99,4 +122,5 @@ public class ManifestacaoDAO {
 
         return quantidadeDeManifestacoes;
     }
+
 }

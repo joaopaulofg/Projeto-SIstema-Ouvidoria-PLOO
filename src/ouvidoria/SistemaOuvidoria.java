@@ -68,8 +68,16 @@ public class SistemaOuvidoria {
         }
     }
 
-    public void buscarManifestacaoPorId(int idProcurado) {
-        // TODO
+    public void buscarManifestacaoPorId(int idProcurado) throws ConexaoFalhouException {
+        Manifestacao manifestacao = manifestacaoDAO.buscarManifestacaoPorId(idProcurado);
+        if(manifestacao != null) {
+            System.out.println("\nManifestação ID #" + manifestacao.getIdManifestacao() +
+                    "\nTipo Manifestação: " + manifestacao.getTipoManifestacao() +
+                    "\nManifestante: " + manifestacao.getNomeManifestante() +
+                    "\nRelato: " + manifestacao.getTextoManifestacao());
+        } else {
+            System.out.println("\nNenhuma manifestação encontrada...");
+        }
     }
 
     public void excluirManifestacaoPorId(int idExclusao) throws ConexaoFalhouException, ManifestacaoNaoEncontradaException {
